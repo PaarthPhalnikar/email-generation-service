@@ -1,5 +1,4 @@
 # app.py
-import asyncio
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
@@ -20,6 +19,12 @@ class GenerateEmailResponse(BaseModel):
     email: EmailResponse
     input_warnings: List[str]
     output_warnings: List[str]
+
+
+@app.get("/")
+async def root():
+    """Simple health check endpoint for Render."""
+    return {"status": "ok", "service": "email-generator"}
 
 
 @app.post("/generate-email", response_model=GenerateEmailResponse)
